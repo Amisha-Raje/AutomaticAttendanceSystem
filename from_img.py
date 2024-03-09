@@ -1,18 +1,17 @@
 from PIL import Image, ImageDraw, ImageFont
 import face_recognition
+from openpyxl import Workbook
 
 # Dictionary of known faces with their corresponding images
 known_faces = {
     "Amisha": "amisha.jpeg",
     "Sahiti": "sahiti.jpeg",
-      "sam": "sam.jpeg",
+    "Sampreety": "sam.jpeg",
     "Atul": "atul.jpeg",
     "Vansh": "vansh.jpeg",
     "Khushi": "khushi.jpeg",  
-    "Jasmine": "jasmine.jpeg", 
+    "Jasmine": "jasmine.jpeg",
     "Harsh": "loomba.jpeg",
-  
-    # Add more names and image paths as needed
 }
 
 # Load known face images
@@ -31,14 +30,21 @@ image = face_recognition.load_image_file(image_path)
 face_locations = face_recognition.face_locations(image)
 face_encodings = face_recognition.face_encodings(image, face_locations)
 
+# Initialize variables for accuracy calculation
+total_faces = len(face_locations)
+correctly_identified_faces = 0
+
+# Create a new Excel workbook and select the active sheet
+wb = Workbook()
+ws = wb.active
+
+# Set up headers for the Excel sheet
+ws.append(["Name"])
+
 # Convert image to PIL format for drawing
 pil_image = Image.fromarray(image)
 draw = ImageDraw.Draw(pil_image)
 font = ImageFont.truetype("arial.ttf", 66)  # Font for text display
-
-# Initialize variables for accuracy calculation
-total_faces = len(face_locations)
-correctly_identified_faces = 0
 
 # Iterate through each face found in the image
 for (top, right, bottom, left), face_encoding in zip(face_locations, face_encodings):
@@ -56,11 +62,18 @@ for (top, right, bottom, left), face_encoding in zip(face_locations, face_encodi
     draw.rectangle(((left, top), (right, bottom)), outline=(255, 0, 0), width=5)
     draw.text((left, top - 70), name, fill=(255, 0, 0, 0), font=font)
 
+    # Add the name to the Excel sheet
+    ws.append([name])
+
 # Calculate accuracy
-accuracy = (correctly_identified_faces / total_faces) * 100
+accuracy = (correctly_identified_faces-3 / total_faces) * 100
 
 # Display or save the image with bounding boxes and labels
 pil_image.show()  # or pil_image.save("output.jpg")
+
+# Save the Excel file
+excel_filename = "identified_names.xlsx"
+wb.save(excel_filename)
 
 # Print the accuracy
 print("Accuracy: {:.2f}%".format(accuracy))

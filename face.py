@@ -2,6 +2,7 @@ import face_recognition
 import cv2
 import numpy as np
 from openpyxl import Workbook
+from datetime import datetime
 # Get a reference to webcam #0 (the default one)
 # amisha-index is 0 for webcam we can change this value for mobile cam and others
 video_capture = cv2.VideoCapture(0)
@@ -114,7 +115,9 @@ while True:
     if cv2.waitKey(1) & 0xFF == ord('q'):
         break
 
-wb.save("recognized_names.xlsx")
+current_datetime = datetime.now().strftime("%Y-%m-%d")
+excel_filename = f"course_name_cam_{current_datetime}.xlsx"
+wb.save(excel_filename)
 # Release handle to the webcam
 video_capture.release()
 cv2.destroyAllWindows()

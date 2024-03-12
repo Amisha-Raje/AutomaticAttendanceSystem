@@ -1,6 +1,7 @@
 from PIL import Image, ImageDraw, ImageFont
 import face_recognition
 from openpyxl import Workbook
+from datetime import datetime
 
 # Dictionary of known faces with their corresponding images
 known_faces = {
@@ -72,8 +73,8 @@ accuracy = (correctly_identified_faces-3 / total_faces) * 100
 pil_image.show()  # or pil_image.save("output.jpg")
 
 # Save the Excel file
-excel_filename = "identified_names.xlsx"
+current_datetime = datetime.now().strftime("%Y-%m-%d")
+excel_filename = f"course_name_img{current_datetime}.xlsx"
 wb.save(excel_filename)
-
 # Print the accuracy
 print("Accuracy: {:.2f}%".format(accuracy))

@@ -1,18 +1,34 @@
 import face_recognition
 import cv2
 import numpy as np
-
+from openpyxl import Workbook
 # Get a reference to webcam #0 (the default one)
 # amisha-index is 0 for webcam we can change this value for mobile cam and others
 video_capture = cv2.VideoCapture(0)
 
+wb = Workbook()
+ws = wb.active
+ws.append(["Frame", "Name"])
+
+unique_names = set()
 # Load a sample picture and learn how to recognize it.
+amisha_image = face_recognition.load_image_file("amisha.jpeg")
+amisha_face_encoding = face_recognition.face_encodings(amisha_image)[0]
+
 nishita_image = face_recognition.load_image_file("nishita.jpg")
 nishita_face_encoding = face_recognition.face_encodings(nishita_image)[0]
 
 # Load a second sample picture and learn how to recognize it.
-amisha_image = face_recognition.load_image_file("amisha.jpeg")
-amisha_face_encoding = face_recognition.face_encodings(amisha_image)[0]
+
+
+# amisha_image = face_recognition.load_image_file("mamta.jpg")
+# amisha_face_encoding = face_recognition.face_encodings(amisha_image)[0]
+
+# amisha_image = face_recognition.load_image_file("shan.jpeg")
+# amisha_face_encoding = face_recognition.face_encodings(amisha_image)[0]
+
+# amisha_image = face_recognition.load_image_file("vansh.jpeg")
+# amisha_face_encoding = face_recognition.face_encodings(amisha_image)[0]
 
 # Create arrays of known face encodings and their names
 known_face_encodings = [
@@ -21,7 +37,9 @@ known_face_encodings = [
 ]
 known_face_names = [
     "Nishita Lath",
-    "Amisha Raje"
+    "Amisha Raje",
+    "Mamta",
+    "Shanmukha"
 ]
 
 # Initialize some variables
@@ -30,6 +48,7 @@ face_encodings = []
 face_names = []
 process_this_frame = True
 
+unique_names = set()
 while True:
     # Grab a single frame of video
     ret, frame = video_capture.read()
@@ -64,6 +83,10 @@ while True:
                 name = known_face_names[best_match_index]
 
             face_names.append(name)
+        for name in face_names:
+            if name not in unique_names:
+                ws.append([video_capture.get(cv2.CAP_PROP_POS_FRAMES), name])
+                unique_names.add(name)
 
     process_this_frame = not process_this_frame
 
@@ -91,6 +114,7 @@ while True:
     if cv2.waitKey(1) & 0xFF == ord('q'):
         break
 
+wb.save("recognized_names.xlsx")
 # Release handle to the webcam
 video_capture.release()
 cv2.destroyAllWindows()

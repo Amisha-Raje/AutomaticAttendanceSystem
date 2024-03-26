@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
-        <head>
-        <title>Mark Attendance</title>
+    <head>
+        <title>Welcome</title>
         <meta charset="UTF-8">
 	    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
-	    <link rel="stylesheet" href="../static/Login.css">
-        <link rel="stylesheet" href="../static/navbar.css">
+	    <link rel="stylesheet" href="View.css">
+        <link rel="stylesheet" href="navbar.css">
     </head>
     <body>
         <!--Navigation bar-->
@@ -23,7 +23,7 @@
                     </button>
         
                     <div class="col-md-3 col-sm-6 col-xs-12 left" id ="left">  
-                        <img src="../static/col_logo.png" width="100px" height="100px" id="logo" alt="Logo image" style="margin-left: -30%;" />
+                        <img src="col_logo.png" width="100px" height="100px" id=logo alt="Logo image" style="margin-left: -30%;" />
                     </div>
                     <a class="navbar-brand" href="homepage.php" style="color:white;font-size:155%;"><span> Automatic Attendance System</span></a>
                     <br>
@@ -34,8 +34,9 @@
                     </ul>
                 </div>
                 </div>
-        </nav>
+                </nav>
         <!--/ Navigation bar-->
+
         <!-- Banner-->
         <div class="banner">
             <div class="bg-color">
@@ -57,46 +58,14 @@
             </div>
         </div>
         <!--/ Banner-->
-        <form action="Fac_takeAtt.php" method="get">
-            <div class="login-box">
-			    <h1>Mark Attendance</h1>
-
-			    <div class="textbox">
-				    <i class="fa fa-tasks" aria-hidden="true"></i>
-				    <input type="text" placeholder="Course Number" name="CNo" value="" maxlength="6">
-			    </div>
-
-			    <div class="textbox">
-				    <i class="fa fa-file" aria-hidden="true"></i>
-				    <input type="text" placeholder="Course Name" name="CName" value="" maxlength="100">
-			    </div>
-
-                <div class="textbox">
-				    <i class="fa fa-calendar" aria-hidden="true"></i>
-				    <input type="text" placeholder="Enter Date" name="dt" value="" maxlength="10">
-			    </div>
-
-               
-                <button onclick="runPythonScript()">Live Attendance</button>
-                <script>
-                  function runPythonScript() {
-                    // Send an AJAX request to the server to run the Python script
-                    var xhr = new XMLHttpRequest();
-                    xhr.open("GET", "/run_script");
-                    xhr.onreadystatechange = function() {
-                      if (xhr.readyState === XMLHttpRequest.DONE) {
-                        if (xhr.status === 200) {
-                          console.log("Python script executed successfully");
-                        } else {
-                          console.error("Error executing Python script");
-                        }
-                      }
-                    };
-                    xhr.send();    
-                  }
-                </script>
-			     <input class="button" type="button" value="Upload Image" onclick="window.location.href='/stud-uploadimage';">
-            </div>
-        </form>
+        <div class="box">
+			<!-- <h1>Welcome! </h1> -->
+		    <input class="button" type="submit" name="e" value="Upload Image" onClick="document.location.href='Stud_uploadImage.php'" >
+		    <input class="button" type="submit" name="e" value="View Image" onClick="document.location.href='Stud_viewImage.php'" >
+		    <input class="button" type="submit" name="e" value="Course Registration" onClick="document.location.href='Stud_regCourse.php'" >
+		    <input class="button" type="submit" name="e" value="View Attendance" onClick="document.location.href='Alu_update.php'" >
+		    <input class="button" type="submit" name="e" value="Raise an Issue" onClick="document.location.href='Alu_update.php'" >
+		    <input class="button" type="submit" name="l" value="Logout" onClick="document.location.href='Alu_logout.php'"  >
+        </div>
     </body>
 </html>

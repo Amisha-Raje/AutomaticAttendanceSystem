@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
         <head>
-        <title>Mark Attendance</title>
+        <title>Student Login</title>
         <meta charset="UTF-8">
 	    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
@@ -23,7 +23,7 @@
                     </button>
         
                     <div class="col-md-3 col-sm-6 col-xs-12 left" id ="left">  
-                        <img src="../static/col_logo.png" width="100px" height="100px" id="logo" alt="Logo image" style="margin-left: -30%;" />
+                        <img src="col_logo.png" width="100px" height="100px" id=logo alt="Logo image" style="margin-left: -30%;" />
                     </div>
                     <a class="navbar-brand" href="homepage.php" style="color:white;font-size:155%;"><span> Automatic Attendance System</span></a>
                     <br>
@@ -57,45 +57,23 @@
             </div>
         </div>
         <!--/ Banner-->
-        <form action="Fac_takeAtt.php" method="get">
+        <form action="Stud_login.php" method="get">
             <div class="login-box">
-			    <h1>Mark Attendance</h1>
+			    <h1>Login</h1>
 
 			    <div class="textbox">
-				    <i class="fa fa-tasks" aria-hidden="true"></i>
-				    <input type="text" placeholder="Course Number" name="CNo" value="" maxlength="6">
+				    <i class="fa fa-envelope" aria-hidden="true"></i>
+				    <input type="text" placeholder="Webmail" name="Webmail" value="" maxlength="100">
 			    </div>
 
 			    <div class="textbox">
-				    <i class="fa fa-file" aria-hidden="true"></i>
-				    <input type="text" placeholder="Course Name" name="CName" value="" maxlength="100">
+				    <i class="fa fa-lock" aria-hidden="true"></i>
+				    <input type="password" placeholder="Password" name="stPassword" value="" maxlength="20">
 			    </div>
 
-                <div class="textbox">
-				    <i class="fa fa-calendar" aria-hidden="true"></i>
-				    <input type="text" placeholder="Enter Date" name="dt" value="" maxlength="10">
-			    </div>
-
-               
-                <button onclick="runPythonScript()">Live Attendance</button>
-                <script>
-                  function runPythonScript() {
-                    // Send an AJAX request to the server to run the Python script
-                    var xhr = new XMLHttpRequest();
-                    xhr.open("GET", "/run_script");
-                    xhr.onreadystatechange = function() {
-                      if (xhr.readyState === XMLHttpRequest.DONE) {
-                        if (xhr.status === 200) {
-                          console.log("Python script executed successfully");
-                        } else {
-                          console.error("Error executing Python script");
-                        }
-                      }
-                    };
-                    xhr.send();    
-                  }
-                </script>
-			     <input class="button" type="button" value="Upload Image" onclick="window.location.href='/stud-uploadimage';">
+			    <input class="button" type="submit" name="login" value="Login">
+		
+                <p>Not a member? <a href="{{ url_for('stud_register') }}" style="color:#101010;">Register </a></p>
             </div>
         </form>
     </body>

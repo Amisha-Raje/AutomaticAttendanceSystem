@@ -7,8 +7,8 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" href="View.css">
-    <link rel="stylesheet" href="navbar.css">
+    <link rel="stylesheet" href="../static/View.css">
+    <link rel="stylesheet" href="../static/navbar.css">
 </head>
 <body>
     <!--Navigation bar-->
@@ -21,7 +21,8 @@
                     <span class="icon-bar"></span>
                 </button>
                 <div class="col-md-3 col-sm-6 col-xs-12 left" id ="left">  
-                    <img src="col_logo.png" width="100px" height="100px" id="logo" alt="Logo image" style="margin-left: -30%;" />
+                    <img src="../static/col_logo.png" width="100px" height="100px" id="logo" alt="Logo image" style="margin-left: -30%;" />
+
                 </div>
                 <a class="navbar-brand" href="homepage.php" style="color:white;font-size:155%;"><span> Automatic Attendance System</span></a>
                 <br>
@@ -57,11 +58,40 @@
     </div>
     <!--/ Banner-->
     <div class="box">
-        <!-- <h1>Welcome! </h1> -->
-        <input class="button" type="button" value="Add Course" onclick="window.location.href='Fac_addCourse.html'" >
-        <input class="button" type="button" value="Take Attendance" onclick="window.location.href='Fac_takeAtt.html'" >
-        <input class="button" type="button" value="Show Attendance" onclick="window.location.href='Alu_update.php'" >
-        <input class="button" type="button" value="Logout" onclick="window.location.href='Alu_logout.php'"  >
+        <!-- Buttons for various actions -->
+        <input class="button" type="button" value="Add Course" onclick="window.location.href='/fac-addcourse'" >
+        <input class="button" type="button" value="Take Attendance" onclick="window.location.href='/fac-takeatt'" >
+        <!-- Add id="showAttendanceBtn" to identify the button -->
+        <input id="showAttendanceBtn" class="button" type="button" value="Show Attendance">
+        <input class="button" type="button" value="Logout" onclick="window.location.href='/Alu_logout'"  >
     </div>
+
+    <script>
+        // Function to trigger file download and show popup
+        function downloadAndShowPopup() {
+            fetch('/open_excel')
+                .then(response => {
+                    // Show popup message after successful download
+                    if (response.ok) {
+                        alert('Attendance sheet has been downloaded.');
+                    }
+                    return response.blob();
+                })
+                .then(blob => {
+                    // Create a temporary link to trigger download
+                    const url = window.URL.createObjectURL(blob);
+                    const a = document.createElement('a');
+                    a.href = url;
+                    a.download = 'course_name_cam_2024-03-26.xlsx'; // Update with the actual filename
+                    document.body.appendChild(a);
+                    a.click();
+                    window.URL.revokeObjectURL(url);
+                });
+        }
+
+        // Call the function when the button is clicked
+        document.getElementById('showAttendanceBtn').addEventListener('click', downloadAndShowPopup);
+    </script>  
+    
 </body>
 </html>

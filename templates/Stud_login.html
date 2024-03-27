@@ -23,14 +23,14 @@
                     </button>
         
                     <div class="col-md-3 col-sm-6 col-xs-12 left" id ="left">  
-                        <img src="col_logo.png" width="100px" height="100px" id=logo alt="Logo image" style="margin-left: -30%;" />
+                        <img src="../static/col_logo.png" width="100px" height="100px" id=logo alt="Logo image" style="margin-left: -30%;" />
                     </div>
-                    <a class="navbar-brand" href="homepage.php" style="color:white;font-size:155%;"><span> Automatic Attendance System</span></a>
+                    <a class="navbar-brand" href="homepage.html" style="color:white;font-size:155%;"><span> Automatic Attendance System</span></a>
                     <br>
                 </div>
                 <div class="collapse navbar-collapse" id="myNavbar" >
                     <ul class="nav navbar-nav navbar-right">
-                        <li><a href="homepage.php" class="dropdown" style="color:#f5f5f5;">Home</a></li>  
+                        <li><a href="homepage.html" class="dropdown" style="color:#f5f5f5;">Home</a></li>  
                     </ul>
                 </div>
                 </div>
@@ -57,24 +57,68 @@
             </div>
         </div>
         <!--/ Banner-->
-        <form action="Stud_login.php" method="get">
+        <form action="Stud_login.html" method="get">
             <div class="login-box">
 			    <h1>Login</h1>
 
 			    <div class="textbox">
 				    <i class="fa fa-envelope" aria-hidden="true"></i>
-				    <input type="text" placeholder="Webmail" name="Webmail" value="" maxlength="100">
+				    <input type="text" placeholder="Webmail" id="email" name="Webmail" value="" maxlength="100">
 			    </div>
 
 			    <div class="textbox">
 				    <i class="fa fa-lock" aria-hidden="true"></i>
-				    <input type="password" placeholder="Password" name="stPassword" value="" maxlength="20">
+				    <input type="password" placeholder="Password" id="password" name="stPassword" value="" maxlength="20">
 			    </div>
 
 			    <input class="button" type="submit" name="login" value="Login">
 		
-                <p>Not a member? <a href="{{ url_for('stud_register') }}" style="color:#101010;">Register </a></p>
+                <p>Not a member? <a href="{{ url_for('stud_register') }}" style="color:#101010;">Register</a></p>
             </div>
         </form>
+
+        <!-- Firebase Configuration -->
+    <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-app.js"></script>
+
+<!-- TODO: Add SDKs for Firebase products that you want to use
+     https://firebase.google.com/docs/web/setup#available-libraries -->
+<script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-auth.js"></script>
+<script>
+const firebaseConfig = {
+  apiKey: "AIzaSyCAAVCN3tfsP1wECiodqRRaipXNgZqZd2I",
+  authDomain: "student-automaticattendance.firebaseapp.com",
+  databaseURL: "https://student-automaticattendance-default-rtdb.firebaseio.com",
+  projectId: "student-automaticattendance",
+  storageBucket: "student-automaticattendance.appspot.com",
+  messagingSenderId: "719118131977",
+  appId: "1:719118131977:web:4b9876ff3cda5eab8f29d8"
+};
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);  
+
+    document.getElementById('login-form').addEventListener('submit', function(event) {
+        event.preventDefault();
+        var email = document.getElementById('email').value;
+        var password = document.getElementById('password').value;
+
+        firebase.auth().signInWithEmailAndPassword(email, password)
+            .then(function(userCredential) {
+                // Login successful
+                var user = userCredential.user;
+                console.log('User logged in:', user);
+                alert("user logged in");
+                // Redirect or show success message
+                window.location.href = 'Fac_menu.html';
+            })
+            .catch(function(error) {
+                // Handle Errors here.
+                var errorCode = error.code;
+                var errorMessage = error.message;
+                console.error('Login error:', errorMessage);
+                // Show error message to the user
+                alert(errorMessage);
+            });
+    });
+</script>
     </body>
 </html>

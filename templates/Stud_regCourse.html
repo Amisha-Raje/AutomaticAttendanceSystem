@@ -1,17 +1,18 @@
+<!DOCTYPE html>
 <html lang="en">
-<head>
-    <title>Image Upload</title>
-    <meta charset="UTF-8">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" href="../static/navbar.css">
-    <link rel="stylesheet" href="../static/View.css">
-</head>
-<body>
-<!--Navigation bar-->
-<nav class="navbar navbar-default navbar-fixed-top" style="background-color:#191970;">
+        <head>
+        <title>Course Registration</title>
+        <meta charset="UTF-8">
+	    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+	    <link rel="stylesheet" href="../static/Login.css">
+        <link rel="stylesheet" href="../static/navbar.css">
+    </head>
+    <body>
+        <!--Navigation bar-->
+        <nav class="navbar navbar-default navbar-fixed-top" style="background-color:#191970;">
                 <div class="container">
                 <div class="navbar-header">
 
@@ -33,12 +34,11 @@
                     </ul>
                 </div>
                 </div>
-                </nav>
+        </nav>
         <!--/ Navigation bar-->
-
         <!-- Banner-->
-                <div class="banner">
-                <div class="bg-color">
+        <div class="banner">
+            <div class="bg-color">
                 <div class="container">
                     <div class="row">
                         <div class="banner-text text-center">
@@ -54,20 +54,31 @@
                         </div>
                     </div>
                 </div>
-                </div>
-                </div>
+            </div>
+        </div>
         <!--/ Banner-->
-<div class="box">
-    <!-- <h1 style="margin-top:100px;">Welcome, <?php echo $_SESSION["username"] ?>! </h1> -->
-<!-- </div>
+        <form action="Stud_regCourse.html" method="get">
+            <div class="login-box">
+			    <h1>Course Registration</h1>
 
-<div class="upload-form"> -->
-    <form action="Stud_uploadImage.html" method="post" enctype="multipart/form-data">
-        <label for="image"><h1>Select Image</h1></label>
-        <input type="file" name="image" id="image">
-        <input type="submit" value="Upload Image" class="button" name="submit">
-    </form>
-</div>
+                <div class="textbox">
+				    <i class="fa fa-user" aria-hidden="true"></i>
+				    <input type="text" placeholder="Faculty Name" name="fName" value="" maxlength="50">
+			    </div>
 
-</body>
+			    <div class="textbox">
+				    <i class="fa fa-tasks" aria-hidden="true"></i>
+				    <input type="text" placeholder="Course Number" name="CNo" value="" maxlength="6">
+			    </div>
+
+			    <div class="textbox">
+				    <i class="fa fa-file" aria-hidden="true"></i>
+				    <input type="text" placeholder="Course Name" name="CName" value="" maxlength="100">
+			    </div>
+
+			    <input class="button" type="submit" name="add" value="Add Course">
+		
+            </div>
+        </form>
+    </body>
 </html>

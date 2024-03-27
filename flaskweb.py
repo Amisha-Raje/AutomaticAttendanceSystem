@@ -1,4 +1,4 @@
-from flask import Flask, request, render_template, jsonify
+from flask import Flask, request, render_template, jsonify, send_file
 import subprocess
 from datetime import datetime
 
@@ -44,33 +44,6 @@ def open_excel():
     print("File path:", excel_filename)  # Print the file path
     return send_file(excel_filename, as_attachment=True)
 
-@app.route('/upload', methods=['POST'])
-def upload():
-    try:
-        if 'image' not in request.files:
-            return jsonify(message="No file part"), 400
-        
-        image = request.files['image']
-
-        if image.filename == '':
-            return jsonify(message="No selected file"), 400
-
-        if image:
-            # Save the uploaded image
-            image_path = 'uploads/' + image.filename
-            image.save(image_path)
-
-            # Now process the image using face recognition script
-            result = subprocess.check_output(['python', 'from_img.py', image_path])
-            # Example: result = subprocess.check_output(['python', 'face_recognition_script.py', image_path])
-
-            # Handle the result as needed
-            result = result.decode('utf-8').strip()  # Decode bytes to string
-            return jsonify(message="Image uploaded and processed successfully", result=result), 200
-    except Exception as e:
-        return jsonify(message=str(e)), 500
-
-    return jsonify(message="An error occurred"), 500
 
 @app.route('/fac-takeatt')
 def fac_takeatt():
@@ -81,6 +54,10 @@ def fac_takeatt():
 def stud_login():
     return render_template('Stud_login.html')
 
+@app.route('/excel')
+def excel():
+     excel_file_path = 'C:\XAMPP\htdocs\capstone_face_recognition\course_name_cam_2024-03-26.xlsx'
+     return send_file(excel_file_path, as_attachment=True)
 
 @app.route('/stud-register')
 def stud_register():

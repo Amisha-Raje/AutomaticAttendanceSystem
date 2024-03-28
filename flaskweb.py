@@ -37,7 +37,7 @@ def fac_uploadimage():
     return render_template('fac_uploadImage.html')
 
 @app.route('/stud-uploadimage')
-def fac_uploadimage():
+def stud_uploadimage():
     # Pass the URL to the template
     return render_template('Stud_uploadImage.html')
 

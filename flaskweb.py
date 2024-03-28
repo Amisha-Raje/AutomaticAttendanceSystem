@@ -17,6 +17,10 @@ def fac_menu():
     # Render the template and pass the URL as a variable
     return render_template('Fac_menu.html')
 
+@app.route('/stud-menu')
+def stud_menu():
+    return render_template('Stud_menu.html')
+
 @app.route('/fac-login')
 def fac_login():
     # Pass the URL to the template
@@ -27,11 +31,15 @@ def fac_takeaddcourse():
     # Pass the URL to the template
     return render_template('Fac_addCourse.html')
 
-@app.route('/stud-uploadimage')
+@app.route('/fac-uploadimage')
 def fac_uploadimage():
     # Pass the URL to the template
     return render_template('fac_uploadImage.html')
 
+@app.route('/stud-uploadimage')
+def fac_uploadimage():
+    # Pass the URL to the template
+    return render_template('Stud_uploadImage.html')
 
 def generate_excel_filename():
     current_date = datetime.now().strftime("%Y-%m-%d")

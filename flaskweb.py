@@ -30,7 +30,7 @@ def fac_takeaddcourse():
 @app.route('/stud-uploadimage')
 def fac_uploadimage():
     # Pass the URL to the template
-    return render_template('Stud_uploadImage.html')
+    return render_template('fac_uploadImage.html')
 
 
 def generate_excel_filename():
@@ -49,6 +49,12 @@ def open_excel():
 def fac_takeatt():
     # Pass the URL to the template
     return render_template('Fac_takeAtt.html')
+
+
+# @app.route('/upload')
+# def fupload():
+#     # Pass the URL to the template
+#     return render_template('from_img.py')
 
 @app.route('/stud-login')
 def stud_login():
@@ -75,8 +81,9 @@ def run_script():
     except Exception as e:
         return f'Error executing Python script: {e}', 500 
 
-@app.route('/run_another_script')
-def run_another_script():
+
+@app.route('/upload')
+def upload():
     try:
         subprocess.run(['python', 'from_img.py'])
         return 'Another Python script executed successfully', 200

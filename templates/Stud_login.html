@@ -57,7 +57,7 @@
             </div>
         </div>
         <!--/ Banner-->
-        <form action="Stud_login.html" method="get">
+        <form id="login-form" action="javascript:void(0)">
             <div class="login-box">
 			    <h1>Login</h1>
 
@@ -108,7 +108,7 @@ const firebaseConfig = {
                 console.log('User logged in:', user);
                 alert("user logged in");
                 // Redirect or show success message
-                window.location.href = 'Fac_menu.html';
+                window.location.href = '/stud-menu';
             })
             .catch(function(error) {
                 // Handle Errors here.

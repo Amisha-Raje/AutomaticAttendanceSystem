@@ -55,16 +55,16 @@
         </div>
     </div>
     <!--/ Banner-->
-    <form id="login-form" action="javascript:void(0)">
+    <form id="login-form" action="/login" method="post">
         <div class="login-box">
             <h1>Login</h1>
             <div class="textbox">
                 <i class="fa fa-envelope" aria-hidden="true"></i>
-                <input type="text" placeholder="Webmail" id="email" name="Webmail" value="" maxlength="100">
+                <input type="email" placeholder="Email" id="email" name="email" value="" required>
             </div>
             <div class="textbox">
                 <i class="fa fa-lock" aria-hidden="true"></i>
-                <input type="password" placeholder="Password" id="password" name="stPassword" value="" maxlength="20">
+                <input type="password" placeholder="Password" id="password" name="password" value="" required>
             </div>
             <input class="button" type="submit" name="login" value="Login">
             <p>Not a member? <a href="{{ url_for('fac_register') }}" style="color:#101010;">Register </a></p>
@@ -102,6 +102,7 @@
                     console.log('User logged in:', user);
                     alert("user logged in");
                     // Redirect or show success message
+                    localStorage.setItem('loggedInUser', JSON.stringify(user));
                     window.location.href = '/fac-menu';
                 })
                 .catch(function(error) {

@@ -91,28 +91,26 @@
         firebase.initializeApp(firebaseConfig);  
 
         document.getElementById('login-form').addEventListener('submit', function(event) {
-            event.preventDefault();
-            var email = document.getElementById('email').value;
-            var password = document.getElementById('password').value;
+        event.preventDefault();
+        var email = document.getElementById('email').value;
+        var password = document.getElementById('password').value;
 
-            firebase.auth().signInWithEmailAndPassword(email, password)
-                .then(function(userCredential) {
-                    // Login successful
-                    var user = userCredential.user;
-                    console.log('User logged in:', user);
-                    alert("user logged in");
-                    // Redirect or show success message
-                    window.location.href = '/fac-menu';
-                })
-                .catch(function(error) {
-                    // Handle Errors here.
-                    var errorCode = error.code;
-                    var errorMessage = error.message;
-                    console.error('Login error:', errorMessage);
-                    // Show error message to the user
-                    alert(errorMessage);
-                });
-        });
+        firebase.auth().signInWithEmailAndPassword(email, password)
+            .then(function(userCredential) {
+                var user = userCredential.user;
+                console.log('User logged in:', user);
+                alert("user logged in");
+
+                // Redirect to the next page with email as a parameter
+                window.location.href = '/fac-menu?uid=' + user.uid;
+            })
+            .catch(function(error) {
+                var errorMessage = error.message;
+                console.error('Login error:', errorMessage);
+                alert(errorMessage);
+            });
+    });
+    
     </script>
 </body>
 </html>

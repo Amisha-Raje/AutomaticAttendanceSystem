@@ -9,7 +9,6 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="../static/View.css">
     <link rel="stylesheet" href="../static/navbar.css">
-    </script>
 </head>
 <body>
     <!--Navigation bar-->
@@ -23,7 +22,6 @@
                 </button>
                 <div class="col-md-3 col-sm-6 col-xs-12 left" id ="left">  
                     <img src="../static/col_logo.png" width="100px" height="100px" id="logo" alt="Logo image" style="margin-left: -30%;" />
-
                 </div>
                 <a class="navbar-brand" href="homepage.html" style="color:white;font-size:155%;"><span> Automatic Attendance System</span></a>
                 <br>
@@ -58,14 +56,25 @@
         </div>
     </div>
     <!--/ Banner-->
+  
     <div class="box">
         <!-- Buttons for various actions -->
-        <input class="button" type="button" value="Add Course" onclick="window.location.href='/fac-addcourse'" >
-        <input class="button" type="button" value="Take Attendance" onclick="window.location.href='/fac-takeatt'" >
+        <input class="button" type="button" value="Add Course" onclick="redirectToAddCourse('/fac-addcourse')">
+        <input class="button" type="button" value="Take Attendance" onclick="redirectToAddCourse('/fac-takeatt')" >
         <!-- Add id="showAttendanceBtn" to identify the button -->
-        <input id="showAttendanceBtn" class="button" type="button" value="Show Attendance" onclick="window.location.href='/excel'">
+        <input id="showAttendanceBtn" class="button" type="button" value="Show Attendance" onclick="redirectToAddCourse('/excel')">
         <input class="button" type="button" value="Logout" onclick="window.location.href='/Alu_logout'"  >
     </div>
-   
+    <script>
+        function redirectToAddCourse(nextPage) {
+            // Retrieve UID from URL parameter
+            const queryString = window.location.search;
+            const urlParams = new URLSearchParams(queryString);
+            const uid = urlParams.get('uid');
+
+            // Pass UID to the next page
+            window.location.href = nextPage + '?uid=' + uid;
+        }
+    </script>
 </body>
 </html>

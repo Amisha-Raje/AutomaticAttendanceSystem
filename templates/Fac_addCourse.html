@@ -88,27 +88,32 @@
         // Initialize Firebase
         firebase.initializeApp(firebaseConfig);
 
-        document.getElementById('add-course-form').addEventListener('submit', function(event) {
-            event.preventDefault();
-            var courseNumber = document.getElementById('courseNumber').value;
-            var courseName = document.getElementById('courseName').value;
+        
+    // Retrieve UID from URL parameter
+    var urlParams = new URLSearchParams(window.location.search);
+    var uid = urlParams.get('uid');
 
-            // Get a reference to the database service
-            var database = firebase.database();
+    document.getElementById('add-course-form').addEventListener('submit', function(event) {
+        event.preventDefault();
+        var courseNumber = document.getElementById('courseNumber').value;
+        var courseName = document.getElementById('courseName').value;
 
-            // Create a new course entry in the database
-            database.ref('courses/' + courseNumber).set({
-                courseName: courseName
-            }).then(function() {
-                console.log('Course added successfully');
-                alert('Course added successfully');
-                // Optionally redirect to another page
-                 window.location.href = 'Fac_menu.html';
-            }).catch(function(error) {
-                console.error('Error adding course:', error);
-                alert('Error adding course: ' + error.message);
-            });
+        // Get a reference to the database service
+        var database = firebase.database();
+
+        // Create a new course entry in the database under the user's UID
+        database.ref('users/' + uid + '/courses/' + courseNumber).set({
+            courseName: courseName
+        }).then(function() {
+            console.log('Course added successfully');
+            alert('Course added successfully');
+            // Optionally redirect to another page
+             window.location.href = '/fac-menu?uid=' + uid; // Redirect back to the same page with UID
+        }).catch(function(error) {
+            console.error('Error adding course:', error);
+            alert('Error adding course: ' + error.message);
         });
-    </script>
+    });
+</script>
 </body>
 </html>

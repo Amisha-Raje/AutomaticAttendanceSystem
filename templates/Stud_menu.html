@@ -25,12 +25,12 @@
                     <div class="col-md-3 col-sm-6 col-xs-12 left" id ="left">  
                         <img src="../static/col_logo.png" width="100px" height="100px" id=logo alt="Logo image" style="margin-left: -30%;" />
                     </div>
-                    <a class="navbar-brand" href="homepage.html" style="color:white;font-size:155%;"><span> Automatic Attendance System</span></a>
+                    <a class="navbar-brand" href="/home" style="color:white;font-size:155%;"><span> Automatic Attendance System</span></a>
                     <br>
                 </div>
                 <div class="collapse navbar-collapse" id="myNavbar" >
                     <ul class="nav navbar-nav navbar-right">
-                        <li><a href="homepage.html" class="dropdown" style="color:#f5f5f5;">Home</a></li>  
+                        <li><a href="/home" class="dropdown" style="color:#f5f5f5;">Home</a></li>  
                     </ul>
                 </div>
                 </div>
@@ -59,13 +59,22 @@
         </div>
         <!--/ Banner-->
         <div class="box">
-			<!-- <h1>Welcome! </h1> -->
-		    <input class="button" type="submit" name="e" value="Upload Image" onClick="document.location.href='Stud_uploadImage.html'" >
-		    <input class="button" type="submit" name="e" value="View Image" onClick="document.location.href='Stud_viewImage.html'" >
-		    <input class="button" type="submit" name="e" value="Course Registration" onClick="document.location.href='Stud_regCourse.html'" >
+		    <input class="button" type="submit" name="e" value="Upload Image" onClick="redirectToAddCourse('/stud-uploadimage')" >
+		    <input class="button" type="submit" name="e" value="View Image" onClick="redirectToAddCourse('/stud-viewimage')" >
+		    <input class="button" type="submit" name="e" value="Course Registration" onClick="redirectToAddCourse('/stud-regcourse')" >
 		    <input class="button" type="submit" name="e" value="View Attendance" onClick="document.location.href='Alu_update.html'" >
 		    <input class="button" type="submit" name="e" value="Raise an Issue" onClick="document.location.href='Alu_update.html'" >
 		    <input class="button" type="submit" name="l" value="Logout" onClick="document.location.href='Alu_logout.html'"  >
         </div>
+    <script>
+        function redirectToAddCourse(nextPage) {
+            // Retrieve UID from URL parameter
+            const queryString = window.location.search;
+            const urlParams = new URLSearchParams(queryString);
+            const uid = urlParams.get('uid');
+            // Pass UID to the next page
+            window.location.href = nextPage + '?uid=' + uid;
+        }
+    </script>
     </body>
 </html>

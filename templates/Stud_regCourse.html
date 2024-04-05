@@ -25,12 +25,12 @@
                     <div class="col-md-3 col-sm-6 col-xs-12 left" id ="left">  
                         <img src="../static/col_logo.png" width="100px" height="100px" id=logo alt="Logo image" style="margin-left: -30%;" />
                     </div>
-                    <a class="navbar-brand" href="homepage.html" style="color:white;font-size:155%;"><span> Automatic Attendance System</span></a>
+                    <a class="navbar-brand" href="/home" style="color:white;font-size:155%;"><span> Automatic Attendance System</span></a>
                     <br>
                 </div>
                 <div class="collapse navbar-collapse" id="myNavbar" >
                     <ul class="nav navbar-nav navbar-right">
-                        <li><a href="homepage.html" class="dropdown" style="color:#f5f5f5;">Home</a></li>  
+                        <li><a href="/home" class="dropdown" style="color:#f5f5f5;">Home</a></li>  
                     </ul>
                 </div>
                 </div>
@@ -57,28 +57,76 @@
             </div>
         </div>
         <!--/ Banner-->
-        <form action="Stud_regCourse.html" method="get">
+        <form id="reg-course-form" action="javascript:void(0)">
             <div class="login-box">
 			    <h1>Course Registration</h1>
 
                 <div class="textbox">
 				    <i class="fa fa-user" aria-hidden="true"></i>
-				    <input type="text" placeholder="Faculty Name" name="fName" value="" maxlength="50">
+				    <input type="text" placeholder="Faculty Name" id="facName" name="fName" value="" maxlength="50">
 			    </div>
 
 			    <div class="textbox">
 				    <i class="fa fa-tasks" aria-hidden="true"></i>
-				    <input type="text" placeholder="Course Number" name="CNo" value="" maxlength="6">
+				    <input type="text" placeholder="Course Number" id="courseNo" name="CNo" value="" maxlength="6">
 			    </div>
 
 			    <div class="textbox">
 				    <i class="fa fa-file" aria-hidden="true"></i>
-				    <input type="text" placeholder="Course Name" name="CName" value="" maxlength="100">
+				    <input type="text" placeholder="Course Name" id="courseName" name="CName" value="" maxlength="100">
 			    </div>
 
-			    <input class="button" type="submit" name="add" value="Add Course">
+			    <input class="button" type="submit" name="add" value="Register Course">
 		
             </div>
         </form>
+        <!-- Firebase Configuration -->
+    <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-app.js"></script>
+
+    <!-- TODO: Add SDKs for Firebase products that you want to use
+         https://firebase.google.com/docs/web/setup#available-libraries -->
+    <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-database.js"></script>
+    <script>
+    const firebaseConfig = {
+      apiKey: "AIzaSyCAAVCN3tfsP1wECiodqRRaipXNgZqZd2I",
+      authDomain: "student-automaticattendance.firebaseapp.com",
+      databaseURL: "https://student-automaticattendance-default-rtdb.firebaseio.com",
+      projectId: "student-automaticattendance",
+      storageBucket: "student-automaticattendance.appspot.com",
+      messagingSenderId: "719118131977",
+      appId: "1:719118131977:web:4b9876ff3cda5eab8f29d8"
+    };
+        // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+
+        
+    // Retrieve UID from URL parameter
+    var urlParams = new URLSearchParams(window.location.search);
+    var uid = urlParams.get('uid');
+
+    document.getElementById('reg-course-form').addEventListener('submit', function(event) {
+        event.preventDefault();
+        var facName = document.getElementById('facName').value;
+        var courseNumber = document.getElementById('courseNo').value;
+        var courseName = document.getElementById('courseName').value;
+
+        // Get a reference to the database service
+        var database = firebase.database();
+
+        // Create a new course entry in the database under the user's UID
+        database.ref('users/' + uid + '/courses/' + courseNumber).set({
+            facName: facName,
+            courseName: courseName
+        }).then(function() {
+            console.log('Course registered successfully');
+            alert('Course registered successfully');
+            // Optionally redirect to another page
+             window.location.href = '/stud-menu?uid=' + uid; // Redirect back to the same page with UID
+        }).catch(function(error) {
+            console.error('Error registering course:', error);
+            alert('Error registering course: ' + error.message);
+        });
+    });
+</script>
     </body>
 </html>

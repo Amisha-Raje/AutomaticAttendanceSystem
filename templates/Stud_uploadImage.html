@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <title>Image Upload</title>
@@ -12,62 +13,105 @@
 <body>
 <!--Navigation bar-->
 <nav class="navbar navbar-default navbar-fixed-top" style="background-color:#191970;">
-                <div class="container">
-                <div class="navbar-header">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <div class="col-md-3 col-sm-6 col-xs-12 left" id ="left">  
+                <img src="../static/col_logo.png" width="100px" height="100px" id="logo" alt="Logo image" style="margin-left: -30%;" />
+            </div>
+            <a class="navbar-brand" href="/home" style="color:white;font-size:155%;"><span> Automatic Attendance System</span></a>
+            <br>
+        </div>
+        <div class="collapse navbar-collapse" id="myNavbar">
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="/home" class="dropdown" style="color:#f5f5f5;">Home</a></li>  
+            </ul>
+        </div>
+    </div>
+</nav>
+<!--/ Navigation bar-->
 
-                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-        
-                    <div class="col-md-3 col-sm-6 col-xs-12 left" id ="left">  
-                        <img src="../static/col_logo.png" width="100px" height="100px" id=logo alt="Logo image" style="margin-left: -30%;" />
+<!-- Banner-->
+<div class="banner">
+    <div class="bg-color">
+        <div class="container">
+            <div class="row">
+                <div class="banner-text text-center">
+                    <div class="text-border">
+                        <h2 class="text-dec">Learn To Code</h2>
                     </div>
-                    <a class="navbar-brand" href="/home" style="color:white;font-size:155%;"><span> Automatic Attendance System</span></a>
-                    <br>
-                </div>
-                <div class="collapse navbar-collapse" id="myNavbar" >
-                    <ul class="nav navbar-nav navbar-right">
-                        <li><a href="/home" class="dropdown" style="color:#f5f5f5;">Home</a></li>  
-                    </ul>
-                </div>
-                </div>
-                </nav>
-        <!--/ Navigation bar-->
-
-        <!-- Banner-->
-                <div class="banner">
-                <div class="bg-color">
-                <div class="container">
-                    <div class="row">
-                        <div class="banner-text text-center">
-                            <div class="text-border">
-                                <h2 class="text-dec">Learn To Code</h2>
-                            </div>
-                            <div class="intro-para text-center quote">
-                                <p><br><br></p>
-                            </div>
-                            <a href="#feature" class="mouse-hover">
-                                <div class="mouse"></div>
-                            </a>
-                        </div>
+                    <div class="intro-para text-center quote">
+                        <p><br><br></p>
                     </div>
+                    <a href="#feature" class="mouse-hover">
+                        <div class="mouse"></div>
+                    </a>
                 </div>
-                </div>
-                </div>
-        <!--/ Banner-->
-<div class="box">
-    <!-- <h1 style="margin-top:100px;">Welcome, <?php echo $_SESSION["username"] ?>! </h1> -->
-<!-- </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--/ Banner-->
 
-<div class="upload-form"> -->
-    <form action="Stud_uploadImage.html" method="post" enctype="multipart/form-data">
+<form id="image-upload-form" action="javascript:void(0)">
+    <div class="box">
         <label for="image"><h1>Select Image</h1></label>
         <input type="file" name="image" id="image">
         <input type="submit" value="Upload Image" class="button" name="submit">
-    </form>
-</div>
+    </div>
+</form>
 
+<!-- Firebase Configuration -->
+<script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-auth.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-database.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-storage.js"></script>
+<script>
+    const firebaseConfig = {
+  apiKey: "AIzaSyCAAVCN3tfsP1wECiodqRRaipXNgZqZd2I",
+  authDomain: "student-automaticattendance.firebaseapp.com",
+  databaseURL: "https://student-automaticattendance-default-rtdb.firebaseio.com",
+  projectId: "student-automaticattendance",
+  storageBucket: "student-automaticattendance.appspot.com",
+  messagingSenderId: "719118131977",
+  appId: "1:719118131977:web:4b9876ff3cda5eab8f29d8"
+};
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+    
+    document.getElementById('image-upload-form').addEventListener('submit', async function(event) {
+        event.preventDefault();
+        const queryString = window.location.search;
+        const urlParams = new URLSearchParams(queryString);
+        const uid = urlParams.get('uid');
+        
+                var file = document.getElementById('image').files[0];
+                var storageRef = firebase.storage().ref('images/' + uid + '/' + file.name);
+                var uploadTask = storageRef.put(file);
+                uploadTask.on('state_changed', function(snapshot) {
+                    // Progress monitoring
+                alert(uid);
+                    var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+                    console.log('Upload is ' + progress + '% done');
+                }, function(error) {
+                    // Handle unsuccessful uploads
+                    console.error('Error uploading image:', error);
+                    alert('Error uploading image: ' + error.message);
+                }, function() {
+                    // Handle successful uploads on complete
+                    uploadTask.snapshot.ref.getDownloadURL().then(function(downloadURL) {
+                        console.log('Image uploaded successfully. Download URL:', downloadURL);
+                    // alert(uid);
+                        // You can optionally save the download URL to Firestore here
+                        window.location.href = '/stud-menu?uid=' + uid; // Redirect back to the same page with UID
+                    });
+                });
+            
+    });
+</script>
 </body>
 </html>

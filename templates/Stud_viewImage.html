@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>View Images</title>
+    <style>
+        /* Add CSS styles to control the size and arrangement of the images */
+        #image-container {
+            display: flex; /* Use flexbox to arrange images horizontally */
+            flex-wrap: wrap; /* Allow images to wrap to the next line if necessary */
+            justify-content: center; /* Center images horizontally */
+        }
+
+        #image-container img {
+            max-width: 200px; /* Set the maximum width of the image */
+            max-height: 200px; /* Set the maximum height of the image */
+            margin: 10px; /* Add some margin around each image */
+        }
+
+        .delete-btn {
+            background-color: red;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            cursor: pointer;
+            border-radius: 5px;
+            margin-left: 5px;
+        }
+
+        .add-image-btn {
+            background-color: green;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Navigation bar -->
+    <!-- Add navigation bar if needed -->
+
+    <div class="container">
+        <h1>View Images</h1>
+        <button id="add-image-btn" class="add-image-btn">Add Image</button>
+        <div id="image-container">
+            <!-- Images will be displayed here -->
+        </div>
+    </div>
+
+    <!-- Firebase Configuration -->
+    <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-database.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-storage.js"></script>
+    <script>
+        // Initialize Firebase
+        const firebaseConfig = {
+            apiKey: "AIzaSyCAAVCN3tfsP1wECiodqRRaipXNgZqZd2I",
+  authDomain: "student-automaticattendance.firebaseapp.com",
+  databaseURL: "https://student-automaticattendance-default-rtdb.firebaseio.com",
+  projectId: "student-automaticattendance",
+  storageBucket: "student-automaticattendance.appspot.com",
+  messagingSenderId: "719118131977",
+  appId: "1:719118131977:web:4b9876ff3cda5eab8f29d8"
+        };
+        firebase.initializeApp(firebaseConfig);
+
+        // Reference to the folder in Firebase Storage
+        const storageRef = firebase.storage().ref();
+
+        // Function to fetch and display all images
+        function displayImages(uid) {
+            const userImagesRef = storageRef.child('images/' + uid + '/');
+            userImagesRef.listAll().then(function (result) {
+                result.items.forEach(function (imageRef) {
+                    imageRef.getDownloadURL().then(function (url) {
+                        // Create image element
+                        var imgElement = document.createElement('img');
+                        imgElement.src = url;
+                        imgElement.alt = "Uploaded Image";
+
+                        // Create delete button
+                        var deleteBtn = document.createElement('button');
+                        deleteBtn.innerHTML = "Delete";
+                        deleteBtn.className = "delete-btn";
+
+                        // Append image and delete button to image-container div
+                        var imageDiv = document.createElement('div');
+                        imageDiv.appendChild(imgElement);
+                        imageDiv.appendChild(deleteBtn);
+                        document.getElementById('image-container').appendChild(imageDiv);
+
+                        // Add click event listener to delete button
+                        deleteBtn.addEventListener('click', function () {
+                            // Delete image from Firebase Storage
+                            imageRef.delete().then(function () {
+                                // Remove the image and delete button from the DOM
+                                imageDiv.remove();
+                                console.log('Image deleted successfully');
+                            }).catch(function (error) {
+                                console.error('Error deleting image:', error);
+                            });
+                        });
+                    }).catch(function (error) {
+                        console.error('Error getting download URL:', error);
+                    });
+                });
+            }).catch(function (error) {
+                console.error('Error listing images:', error);
+            });
+        }
+
+        // Call displayImages function with UID when the page loads
+        // You need to replace 'c5NcfwW88YVM8yydLSVVruUSlkn2' with the actual UID
+        window.onload = function () {
+            displayImages('c5NcfwW88YVM8yydLSVVruUSlkn2');
+
+            // Redirect to add image page when the "Add Image" button is clicked
+            document.getElementById('add-image-btn').addEventListener('click', function () {
+                window.location.href = '/stud-uploadimage'; // Replace 'add_image.html' with the actual URL of the add image page
+            });
+        };
+    </script>
+</body>
+
+</html>

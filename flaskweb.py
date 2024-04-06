@@ -8,13 +8,8 @@ app = Flask(__name__)
 def index():
     return render_template('homepage.html')
 
-
-
 @app.route('/fac-menu')
 def fac_menu():
-    # Generate the URL for the redirection page
-    # fac_menu_url = url_for('fac_menu.html')
-    # Render the template and pass the URL as a variable
     return render_template('Fac_menu.html')
 
 @app.route('/stud-menu')
@@ -23,23 +18,27 @@ def stud_menu():
 
 @app.route('/fac-login')
 def fac_login():
-    # Pass the URL to the template
     return render_template('Fac_login.html')
 
 @app.route('/fac-addcourse')
 def fac_takeaddcourse():
-    # Pass the URL to the template
     return render_template('Fac_addCourse.html')
 
 @app.route('/fac-uploadimage')
 def fac_uploadimage():
-    # Pass the URL to the template
     return render_template('fac_uploadImage.html')
 
 @app.route('/stud-uploadimage')
 def stud_uploadimage():
-    # Pass the URL to the template
     return render_template('Stud_uploadImage.html')
+
+@app.route('/stud-viewimage')
+def stud_viewimage():
+    return render_template('Stud_viewImage.html')
+
+@app.route('/stud-regcourse')
+def stud_regcourse():
+    return render_template('Stud_regCourse.html')
 
 def generate_excel_filename():
     current_date = datetime.now().strftime("%Y-%m-%d")
@@ -52,12 +51,9 @@ def open_excel():
     print("File path:", excel_filename)  # Print the file path
     return send_file(excel_filename, as_attachment=True)
 
-
 @app.route('/fac-takeatt')
 def fac_takeatt():
-    # Pass the URL to the template
     return render_template('Fac_takeAtt.html')
-
 
 # @app.route('/upload')
 # def fupload():
@@ -81,6 +77,10 @@ def stud_register():
 def fac_register():
     return render_template('Fac_register.html')
 
+@app.route('/home')
+def home():
+    return render_template('homepage.html')
+
 @app.route('/run_script')
 def run_script():
     try:
@@ -88,7 +88,6 @@ def run_script():
         return 'Python script executed successfully', 200
     except Exception as e:
         return f'Error executing Python script: {e}', 500 
-
 
 @app.route('/upload')
 def upload():

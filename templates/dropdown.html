@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fetch Names from Firebase</title>
+</head>
+<body>
+  <select id="nameDropdown">
+    <option value="" data-email="">Select a Name</option>
+  </select>
+  <button onclick="fetchNames()">Fetch Names</button>
+  <button onclick="sendEmail()">Send Email</button> <!-- New button for sending email -->
+
+  <script src="https://www.gstatic.com/firebasejs/8.5.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.5.0/firebase-database.js"></script>
+
+  <script>
+    // Initialize Firebase
+    const firebaseConfig = {
+        apiKey: "AIzaSyAkigLuiZ5MjbM4e_syOe71xeH8gVoLLr4",
+        authDomain: "automaticattendancesyste-a6a0f.firebaseapp.com",
+        databaseURL: "https://automaticattendancesyste-a6a0f-default-rtdb.firebaseio.com",
+        projectId: "automaticattendancesyste-a6a0f",
+        storageBucket: "automaticattendancesyste-a6a0f.appspot.com",
+        messagingSenderId: "942313834507",
+        appId: "1:942313834507:web:9f15279555550f566f5f0e"
+    };
+
+    firebase.initializeApp(firebaseConfig);
+    const database = firebase.database();
+
+    function fetchNames() {
+      const usersRef = database.ref('users');
+      usersRef.once('value', function(snapshot) {
+        const nameDropdown = document.getElementById('nameDropdown');
+        // Clear existing options
+        nameDropdown.innerHTML = '<option value="" data-email="">Select a Name</option>';
+        snapshot.forEach(function(childSnapshot) {
+          const uid = childSnapshot.key;
+          const name = childSnapshot.child('name').val();
+          const email = childSnapshot.child('email').val();
+          addOptionToDropdown(nameDropdown, name, email);
+        });
+      });
+    }
+
+    function addOptionToDropdown(dropdown, name, email) {
+      const option = document.createElement('option');
+      option.text = name;
+      option.value = name;
+      option.setAttribute('data-email', email); // Store email as data attribute
+      dropdown.appendChild(option);
+    }
+
+    function sendEmail() {
+      const nameDropdown = document.getElementById('nameDropdown');
+      const selectedOption = nameDropdown.options[nameDropdown.selectedIndex];
+      const selectedName = selectedOption.value;
+      const selectedEmail = selectedOption.getAttribute('data-email');
+
+      // You can use an email sending service like EmailJS or Firebase Functions to send emails
+      // For example, using EmailJS:
+      Email.send({
+        Host: 'smtp.yourisp.com',
+        Username: 'yourusername',
+        Password: 'yourpassword',
+        To: selectedEmail,
+        From: 'youremail@example.com',
+        Subject: 'Subject of your email',
+        Body: 'Body of your email'
+      }).then(function(message) {
+        alert('Email sent successfully');
+      }).catch(function(error) {
+        console.error('Error:', error);
+      });
+    }
+  </script>
+</body>
+</html>

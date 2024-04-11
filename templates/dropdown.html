@@ -6,10 +6,14 @@
   <title>Fetch Names from Firebase</title>
 </head>
 <body>
-  <select id="nameDropdown">
+  <select id="nameDropdown" onclick="fetchNames()">
     <option value="" data-email="">Select a Name</option>
   </select>
-  <button onclick="fetchNames()">Fetch Names</button>
+  <br><br>
+  <label for="message">Message:</label><br>
+  <textarea id="message" name="message" rows="4" cols="50"></textarea>
+  <br><br>
+  <!-- <button onclick="fetchNames()">Fetch Names</button> -->
   <button onclick="sendEmail()">Send Email</button>
 
   <script src="https://www.gstatic.com/firebasejs/8.5.0/firebase-app.js"></script>
@@ -55,29 +59,32 @@
       option.setAttribute('data-email', email);
       dropdown.appendChild(option);
     }
+    
 
     function sendEmail() {
-      const nameDropdown = document.getElementById('nameDropdown');
-      const selectedOption = nameDropdown.options[nameDropdown.selectedIndex];
-      const selectedEmail = selectedOption.getAttribute('data-email');
-      
-      // Send email using EmailJS
-      const templateParams = {
-        to_email: selectedEmail,
-        from_email: 'amisharaje2018@gmail.com',
-        subject: 'Subject of your email',
-        body: 'Body of your email'
-      };
-      
-      emailjs.send("service_0p1g27i", "template_ir4c4ue", templateParams)
-        .then(function(response) {
-          console.log("Email sent successfully:", response);
-          alert("Email sent successfully to: " + selectedEmail);
-        }, function(error) {
-          console.error("Email sending failed:", error);
-          alert("Email sending failed. Please try again later.");
-        });
-    }
+  const nameDropdown = document.getElementById('nameDropdown');
+  const selectedOption = nameDropdown.options[nameDropdown.selectedIndex];
+  const selectedEmail = selectedOption.getAttribute('data-email');
+  const message = document.getElementById('message').value; // Get the message from the textarea
+  
+  // Send email using EmailJS
+  const templateParams = {
+    to_email: selectedEmail,
+    from_email: 'amisharaje2018@gmail.com',
+    subject: 'Subject of your email',
+    body: message // Use the message obtained from the textarea
+  };
+  
+  emailjs.send("service_0p1g27i", "template_ir4c4ue", templateParams)
+    .then(function(response) {
+      console.log("Email sent successfully:", response);
+      alert("Email sent successfully to: " + selectedEmail);
+    }, function(error) {
+      console.error("Email sending failed:", error);
+      alert("Email sending failed. Please try again later.");
+    });
+}
+
   </script>
 </body>
 </html>

@@ -1,132 +1,182 @@
 <!DOCTYPE html>
 <html lang="en">
-        <head>
-        <title>Course Registration</title>
-        <meta charset="UTF-8">
-	    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta http-equiv="X-UA-Compatible" content="ie=edge">
-	    <link rel="stylesheet" href="../static/Login.css">
-        <link rel="stylesheet" href="../static/navbar.css">
-    </head>
-    <body>
-        <!--Navigation bar-->
-        <nav class="navbar navbar-default navbar-fixed-top" style="background-color:#191970;">
-                <div class="container">
-                <div class="navbar-header">
+<head>
+    <title>Course Registration</title>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="../static/Login.css">
+    <link rel="stylesheet" href="../static/navbar.css">
+</head>
+<body>
+    <!-- Navigation bar -->
+    <nav class="navbar navbar-default navbar-fixed-top" style="background-color:#191970;">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
 
-                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-        
-                    <div class="col-md-3 col-sm-6 col-xs-12 left" id ="left">  
-                        <img src="../static/col_logo.png" width="100px" height="100px" id=logo alt="Logo image" style="margin-left: -30%;" />
-                    </div>
-                    <a class="navbar-brand" href="/home" style="color:white;font-size:155%;"><span> Automatic Attendance System</span></a>
-                    <br>
+                <div class="col-md-3 col-sm-6 col-xs-12 left" id="left">
+                    <img src="../static/col_logo.png" width="100px" height="100px" id="logo" alt="Logo image" style="margin-left: -30%;" />
                 </div>
-                <div class="collapse navbar-collapse" id="myNavbar" >
-                    <ul class="nav navbar-nav navbar-right">
-                        <li><a href="/home" class="dropdown" style="color:#f5f5f5;">Home</a></li>  
-                    </ul>
-                </div>
-                </div>
-        </nav>
-        <!--/ Navigation bar-->
-        <!-- Banner-->
-        <div class="banner">
-            <div class="bg-color">
-                <div class="container">
-                    <div class="row">
-                        <div class="banner-text text-center">
-                            <div class="text-border">
-                                <h2 class="text-dec">Learn To Code</h2>
-                            </div>
-                            <div class="intro-para text-center quote">
-                                <p><br><br></p>
-                            </div>
-                            <a href="#feature" class="mouse-hover">
-                                <div class="mouse"></div>
-                            </a>
+                <a class="navbar-brand" href="/home" style="color:white;font-size:155%;"><span> Automatic Attendance System</span></a>
+                <br>
+            </div>
+            <div class="collapse navbar-collapse" id="myNavbar">
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="/home" class="dropdown" style="color:#f5f5f5;">Home</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <!-- Banner -->
+    <div class="banner">
+        <div class="bg-color">
+            <div class="container">
+                <div class="row">
+                    <div class="banner-text text-center">
+                        <div class="text-border">
+                            <h2 class="text-dec">Learn To Code</h2>
                         </div>
+                        <div class="intro-para text-center quote">
+                            <p><br><br></p>
+                        </div>
+                        <a href="#feature" class="mouse-hover">
+                            <div class="mouse"></div>
+                        </a>
                     </div>
                 </div>
             </div>
         </div>
-        <!--/ Banner-->
-        <form id="reg-course-form" action="javascript:void(0)">
-            <div class="login-box">
-			    <h1>Course Registration</h1>
-
-                <div class="textbox">
-				    <i class="fa fa-user" aria-hidden="true"></i>
-				    <input type="text" placeholder="Faculty Name" id="facName" name="fName" value="" maxlength="50">
-			    </div>
-
-			    <div class="textbox">
-				    <i class="fa fa-tasks" aria-hidden="true"></i>
-				    <input type="text" placeholder="Course Number" id="courseNo" name="CNo" value="" maxlength="6">
-			    </div>
-
-			    <div class="textbox">
-				    <i class="fa fa-file" aria-hidden="true"></i>
-				    <input type="text" placeholder="Course Name" id="courseName" name="CName" value="" maxlength="100">
-			    </div>
-
-			    <input class="button" type="submit" name="add" value="Register Course">
-		
+    </div>
+    <!-- Course registration form -->
+    <form id="reg-course-form" action="javascript:void(0)">
+        <div class="login-box">
+            <h1>Course Registration</h1>
+            
+            <!-- Dropdown for faculty names -->
+            <div>
+                <select id="nameDropdown" onchange="updatePlaceholder()">
+                    <option value="" id="facName" name="fName" data-email=""><i class="fa fa-user" aria-hidden="true"></i>Select Faculty Name</option>
+                </select>
             </div>
-        </form>
-        <!-- Firebase Configuration -->
-    <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-app.js"></script>
 
-    <!-- TODO: Add SDKs for Firebase products that you want to use
-         https://firebase.google.com/docs/web/setup#available-libraries -->
+            <!-- Input fields for course details -->
+            <div class="textbox">
+                <i class="fa fa-tasks" aria-hidden="true"></i>
+                <input type="text" placeholder="Course Number" id="courseNo" name="CNo" value="" maxlength="6">
+            </div>
+            <div class="textbox">
+                <i class="fa fa-file" aria-hidden="true"></i>
+                <input type="text" placeholder="Course Name" id="courseName" name="CName" value="" maxlength="100">
+            </div>
+
+            <!-- Submit button -->
+            <input class="button" type="submit" name="add" value="Register Course">
+        </div>
+    </form>
+    
+    <!-- Firebase Configuration for the database to fetch names -->
+    <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-database.js"></script>
     <script>
-    const firebaseConfig = {
-      apiKey: "AIzaSyCAAVCN3tfsP1wECiodqRRaipXNgZqZd2I",
+        const fetchFirebaseConfig = {
+            
+      apiKey: "AIzaSyAkigLuiZ5MjbM4e_syOe71xeH8gVoLLr4",
+            authDomain: "automaticattendancesyste-a6a0f.firebaseapp.com",
+            databaseURL: "https://automaticattendancesyste-a6a0f-default-rtdb.firebaseio.com",
+            projectId: "automaticattendancesyste-a6a0f",
+            storageBucket: "automaticattendancesyste-a6a0f.appspot.com",
+            messagingSenderId: "942313834507",
+            appId: "1:942313834507:web:9f15279555550f566f5f0e"
+        };
+        // Initialize Firebase for fetching data
+        const fetchFirebaseApp = firebase.initializeApp(fetchFirebaseConfig, "fetchApp");
+
+        // Function to fetch faculty names from the database and populate the dropdown
+        function fetchNames() {
+    const fetchDatabase = fetchFirebaseApp.database(); // Reference the database from fetchFirebaseApp
+    const usersRef = fetchDatabase.ref('users');
+
+    usersRef.once('value', function(snapshot) {
+        const nameDropdown = document.getElementById('nameDropdown');
+        nameDropdown.innerHTML = '<option value="" data-email="">Select a Name</option>';
+        snapshot.forEach(function(childSnapshot) {
+            const uid = childSnapshot.key;
+            const name = childSnapshot.child('name').val();
+            const email = childSnapshot.child('email').val();
+            addOptionToDropdown(nameDropdown, name, email);
+        });
+    });
+}
+
+function addOptionToDropdown(dropdown, name, email) {
+    const option = document.createElement('option');
+    option.text = name;
+    option.value = name;
+    option.setAttribute('data-email', email);
+    dropdown.appendChild(option);
+}
+
+        // Function to update placeholder option when a selection is made
+        function updatePlaceholder() {
+            const nameDropdown = document.getElementById('nameDropdown');
+            if (nameDropdown.value !== "") {
+                nameDropdown.firstElementChild.textContent = nameDropdown.value;
+            }
+        }
+
+        // Fetch faculty names when the page loads
+        fetchNames();
+    </script>
+
+    <!-- Firebase Configuration for the main database to push data -->
+    <script>
+        const mainFirebaseConfig = {
+            apiKey: "AIzaSyCAAVCN3tfsP1wECiodqRRaipXNgZqZd2I",
       authDomain: "student-automaticattendance.firebaseapp.com",
       databaseURL: "https://student-automaticattendance-default-rtdb.firebaseio.com",
       projectId: "student-automaticattendance",
       storageBucket: "student-automaticattendance.appspot.com",
       messagingSenderId: "719118131977",
       appId: "1:719118131977:web:4b9876ff3cda5eab8f29d8"
-    };
-        // Initialize Firebase
-    firebase.initializeApp(firebaseConfig);
+        };
+        // Initialize Firebase for the main database
+        const mainFirebaseApp = firebase.initializeApp(mainFirebaseConfig, "mainApp");
 
-        
-    // Retrieve UID from URL parameter
-    var urlParams = new URLSearchParams(window.location.search);
-    var uid = urlParams.get('uid');
+        // Retrieve UID from URL parameter
+        const urlParams = new URLSearchParams(window.location.search);
+        const uid = urlParams.get('uid');
 
-    document.getElementById('reg-course-form').addEventListener('submit', function(event) {
-        event.preventDefault();
-        var facName = document.getElementById('facName').value;
-        var courseNumber = document.getElementById('courseNo').value;
-        var courseName = document.getElementById('courseName').value;
+        // Register course form submission
+        document.getElementById('reg-course-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const facName = document.getElementById('nameDropdown').value;
+            const courseNumber = document.getElementById('courseNo').value;
+            const courseName = document.getElementById('courseName').value;
 
-        // Get a reference to the database service
-        var database = firebase.database();
+            // Get a reference to the database service for main database
+            const mainDatabase = mainFirebaseApp.database();
 
-        // Create a new course entry in the database under the user's UID
-        database.ref('users/' + uid + '/courses/' + courseNumber).set({
-            facName: facName,
-            courseName: courseName
-        }).then(function() {
-            console.log('Course registered successfully');
-            alert('Course registered successfully');
-            // Optionally redirect to another page
-             window.location.href = '/stud-menu?uid=' + uid; // Redirect back to the same page with UID
-        }).catch(function(error) {
-            console.error('Error registering course:', error);
-            alert('Error registering course: ' + error.message);
+            // Create a new course entry in the main database under the user's UID
+            mainDatabase.ref('users/' + uid + '/courses/' + courseNumber).set({
+                facName: facName,
+                courseName: courseName
+            }).then(function() {
+                console.log('Course registered successfully');
+                alert('Course registered successfully');
+                // Optionally redirect to another page
+                window.location.href = '/stud-menu?uid=' + uid; // Redirect back to the same page with UID
+            }).catch(function(error) {
+                console.error('Error registering course:', error);
+                alert('Error registering course: ' + error.message);
+            });
         });
-    });
-</script>
-    </body>
+    </script>
+</body>
 </html>

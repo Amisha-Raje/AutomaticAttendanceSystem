@@ -58,3 +58,28 @@ body {
 	cursor: pointer;
 	margin: 8px 0;
 }
+
+select {
+	/* Styles for the dropdown */
+	width: 100%;
+	padding: 10px;
+	font-size: 18px;
+	border: 1px solid #191970;
+	border-radius: 6px;
+	background-color: #ffffff;
+	color: #191970;
+  }
+  
+  option {
+	/* Styles for the options */
+	font-size: 18px;
+	background-color: #ffffff;
+	color: #191970;
+  }
+  
+  /* Hover effect for options */
+  option:hover {
+	background-color: #e0e0e0;
+	color: #000000;
+  }
+  
